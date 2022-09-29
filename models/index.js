@@ -18,6 +18,18 @@ const Page = db.define('page', {
   },
   status: {
     type: Sequelize.ENUM('open', 'closed')
+  },
+
+
+},{
+  hooks:{
+    beforeValidate:function generateSlug (Page) {
+      // Removes all non-alphanumeric characters from title
+      // And make whitespace underscore
+
+      const slug= Page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+      Page.slug=slug;
+    }
   }
 });
 
